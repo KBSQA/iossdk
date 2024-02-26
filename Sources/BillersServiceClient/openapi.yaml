@@ -1,0 +1,769 @@
+openapi: 3.0.3
+info:
+  title: Integrated Billers
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: 'https://api.kbs-dev.com'
+paths:
+  /provider/kbs1/GetCurrencies:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get currencies
+      description: get currencies
+      operationId: getCurrencies
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                CurrencyIso: string
+                                CurrencyName: string
+                            
+        '401':
+          description: 'Invalid Auth'
+  /provider/kbs1/GetCountries:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get countries
+      description: get countries
+      operationId: getCountries
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+         description: 'Success'
+         content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                CountryIso: string
+                                CountryName: string
+                                RegionCodes: array
+  /provider/kbs1/GetRegions:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get regions
+      description: get regions
+      operationId: getRegions
+      parameters:
+        - name: countryIsos
+          in: query
+          schema:
+            type: string
+            example: AD
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                RegionCode: string
+                                RegionName: string
+                                CountryIso: array
+  /provider/kbs1/GetProviders:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get providers
+      description: get providers
+      operationId: getProviders
+      parameters:
+        - name: providerCodes
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: countryIsos
+          in: query
+          schema:
+            type: string
+            example: US
+        - name: regionCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: accountNumber
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Successs'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                ProviderCode: string
+                                CountryIso: string
+                                Name: string
+                                ValidationRegex: string
+                                RegionCodes: array
+                                PaymentTypes: array
+                                
+  /provider/kbs1/GetProviderStatus:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get providerStatus
+      description: get providerStatus
+      operationId: getProviderstatus
+      parameters:
+        - name: providerCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: ''
+  /provider/kbs1/GetAccountLookup:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get account-look-up
+      description: get account-look-up
+      operationId: getAccountLookUp
+      parameters:
+        - name: accountNumber
+          in: query
+          schema:
+            type: string
+            example: <string>
+          description: >-
+            For phone number based products, the account number should be in
+            international phone number format.
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                ProviderCode: string
+                                RegionCode: string
+
+  /provider/kbs1/GetErrorCodeDescriptions:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get error-code-descriptions
+      description: get error-code-descriptions
+      operationId: getErrorCodeDescriptions
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: ''
+  /provider/kbs1/GetPromotions:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get promotions
+      description: get promotions
+      operationId: getPromotions
+      parameters:
+        - name: countryIsos
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: providerCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: accountNumber
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: ''
+  /provider/kbs1/GetPromotionDescriptions:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get promotion-descriptions
+      description: get promotion-descriptions
+      operationId: getPromotionDescriptions
+      parameters:
+        - name: languageCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: ''
+          
+  /provider/kbs1/GetProductDescriptions:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: getProductDescriptions
+      description: getProductDescriptions
+      operationId: getproductdescriptions
+      parameters:
+        - name: languageCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: skuCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                DisplayText: string
+                                DescriptionMarkdown: string
+                                ReadMoreMarkdown: string
+                                LocalizationKey: string
+                                LanguageCode: string
+          
+  /provider/kbs1/SendTransfer:
+    post:
+      tags:
+        - provider-service
+        - kbs1 connections
+      operationId: topUpTransfer
+      parameters:
+        - name: ''
+          in: query
+          schema:
+            type: string
+            example: ''
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AccountNumber:
+                  type: string
+                  example: '97465193938'
+                DistributorRef:
+                  type: string
+                  example: '234333'
+                SendCurrencyIso:
+                  type: string
+                  example: QAR
+                SendValue:
+                  type: string
+                  example: '10.00'
+                SkuCode:
+                  type: string
+                  example: OOQAQA52717
+                ValidateOnly:
+                  type: boolean
+                  example: true
+            example:
+              AccountNumber: '97465193938'
+              DistributorRef: '234333'
+              SendCurrencyIso: QAR
+              SendValue: '10.00'
+              SkuCode: OOQAQA52717
+              ValidateOnly: true
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: string
+
+
+  /provider/kbs1/GetProducts:
+    get:
+      tags:
+        - provider-service
+        - kbs1 connections
+      summary: get products
+      description: get products
+      operationId: getProducts
+      parameters:
+        - name: countryIsos
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: providerCodes
+          in: query
+          schema:
+            type: string
+            example: ABUS
+        - name: skuCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: benefits
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: regionCodes
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: accountNumber
+          in: query
+          schema:
+            type: string
+            example: <string>
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        ResultCode:
+                            type: integer
+                        ErrorCodes:
+                            type: array
+                        Items:
+                            type: array
+                            properties:
+                                ProviderCode: string
+                                SkuCode: string
+                                LocalizationKey: string
+                                Maximum:
+                                    type: object
+                                    properties:
+                                        CustomerFee: integer
+                                        DistributorFee: integer
+                                        ReceiveValue: string
+                                        ReceiveCurrencyIso: string
+                                        ReceiveValueExclukbs1Tax: string
+                                        TaxRate: integer
+                                        SendValue: integer
+                                        SendCurrencyIso: string
+                                Maximum:
+                                    type: object
+                                    properties:
+                                        CustomerFee: integer
+                                        DistributorFee: integer
+                                        ReceiveValue: string
+                                        ReceiveCurrencyIso: string
+                                        ReceiveValueExclukbs1Tax: string
+                                        TaxRate: integer
+                                        SendValue: integer
+                                        SendCurrencyIso: string
+                                ProcessingMode: string
+                                RedemptionMechanism: string
+                                Benefit: array
+                                DefaultDisplayText: string
+                                RegionCode: string
+                                PaymentTypes: array
+                                
+  /provider/kbs2/brands/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: brands
+      description: brands
+      operationId: getBrands
+      parameters:
+        - name: category_id
+          in: query
+          schema:
+            type: string
+            example: '21'
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 6f93040524581b236eda9124f2ea8a78c01c534a44f09ce4018b08482108b45e
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        total_count:
+                            type: integer
+                        total_page:
+                            type: integer
+                        current_page:
+                            type: integer
+                        current_page_count:
+                            type: integer
+                        brands:
+                            type: array
+                            properties:
+                                id: integer
+                                is_active: integer
+                                brand_code: string
+                                pin_redeemable: boolean
+                                name: string
+                                country:
+                                    type: object
+                                    properties:
+                                        name: string
+                                        code: string
+                                validity_in_months: boolean
+                                variable_amount: boolean
+                                denominations:
+                                    type: object
+                                    properties:
+                                        QAR:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    is_active: boolean
+                                tagline: string
+                                description: string
+                                brand_accepted_currency: string
+                                redemption_type: string
+                                redemption_instructions: string
+                                
+  /provider/kbs2/brands/54/locations/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: brand location
+      description: brand location
+      operationId: brandLocation
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 11d399e974a9b275ed9fda50d73b646877a33ae13bbf3beb3f13598c2b1fb826
+      responses:
+        '200':
+          description: ''
+  /provider/kbs2/brands/brand_code/locations/2:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: Brand Locations In A City
+      description: Brand Locations In A City
+      operationId: brandLocationsInACity
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 11d399e974a9b275ed9fda50d73b646877a33ae13bbf3beb3f13598c2b1fb826
+      responses:
+        '200':
+          description: ''
+          
+  /provider/kbs2/categories/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: List All Categories
+      description: List All Categories
+      operationId: getCategories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: '2'
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: d2b22184250a9c445ffbf9704a43fcc705cb20d457df805a17c5eddf0d92a477
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        total_count:
+                            type: integer
+                        total_page:
+                            type: integer
+                        current_page:
+                            type: integer
+                        current_page_count:
+                            type: integer
+                        categories:
+                            type: array
+                            properties:
+                                name: string
+                                    
+  /provider/kbs2/countries/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: List All Countries
+      description: List All Countries
+      operationId: listAllCountries
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 11d399e974a9b275ed9fda50d73b646877a33ae13bbf3beb3f13598c2b1fb826
+      responses:
+        '200':
+          description: ''
+  /provider/kbs2/currencies/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: List All Currencies
+      description: List All Currencies
+      operationId: listAllCurrencies
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 0ea096ada464f445c6dd9cb16ed65732f0101be214d72348e23e47a7fd734046
+      responses:
+        '200':
+          description: ''
+  /provider/kbs2/currencies/rates/:
+    get:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: Exchange Rates
+      description: Exchange Rates
+      operationId: exchangeRates
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 11d399e974a9b275ed9fda50d73b646877a33ae13bbf3beb3f13598c2b1fb826
+      responses:
+        '200':
+          description: ''
+
+
+
+  /provider/kbs2/orders/:
+    post:
+      tags:
+        - provider-service
+        - you got a gift
+      summary: orders
+      description: orders
+      operationId: orderGiftCard
+      parameters:
+        - name: x-api-key
+          in: header
+          schema:
+            type: string
+            example: 11d399e974a9b275ed9fda50d73b646877a33ae13bbf3beb3f13598c2b1fb826
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reference_id:
+                  type: string
+                  example: '124DSF'
+                notify:
+                  type: integer
+                  example: 1
+                brand_code:
+                  type: string
+                  example: "184276"
+                currency:
+                  type: string
+                  example: 'AED'
+                amount:
+                  type: integer
+                  example: 100
+                country:
+                  type: string
+                  example: "SA"
+                receiver_name:
+                  type: string
+                  example: "Jhon"
+                receiver_email:
+                  type: string
+                  example: "Jhon@gmail.com"
+                receiver_phone:
+                  type: string
+                  example: "123445555"
+                message:
+                  type: string
+                  example: "Thanks for purchasing"
+                delivery_language:
+                  type: string
+                  example: "en"
+            example:
+              reference_id: "DF232"
+              notifty: 0
+              brand_code: "2222"
+              currency: "AED"
+              amount: 100
+              country: "SA"
+              receiver_name: "Jhon"
+              receiver_email: "Jhon@gmail.com"
+              receiver_phone: "23333333"
+              message: "Thanks for purchasing"
+              delivery_language: "en"
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+                schema:
+                    type: string
+tags:
+  - name: provider-service
+  - name: kbs1 connections
+  - name: you got a gift
